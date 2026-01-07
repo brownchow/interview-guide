@@ -14,7 +14,21 @@ version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
+    maven {
+        url = uri("https://repo.spring.io/milestone")
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    runtimeClasspath {
+        canBeResolved = true
+    }
 }
 
 dependencies {
@@ -52,7 +66,7 @@ dependencies {
     // MapStruct - 对象映射 (必须在Lombok之后配置)
     implementation "org.mapstruct:mapstruct:${libs.versions.mapstruct.get()}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${libs.versions.mapstruct.get()}"
-    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -60,12 +74,82 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+bootJar { enabled = false }
+
+jar {
+    enabled = true
+    manifest {
+        attributes 'Main-Class': 'interview.guide.App'
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+tasks.register("assembleDist", Copy) {
+    // 真正拷贝之前，做路径校验
+    doFirst {
+        def binDir = rootProject.file("deploy/templates/bin")
+        if (!binDir.exists()) {
+            throw new GradleException("部署脚本目录不存在: ${binDir.absolutePath}")
+        }
+    }
+
+    dependsOn tasks.named("jar")
+
+    into(layout.buildDirectory.dir("dist"))
+
+    from(tasks.named("jar").map { it.archiveFile.get().asFile }) {
+        rename { "guide.jar" }
+    }
+
+    into("lib") {
+        from(configurations.runtimeClasspath)
+    }
+
+    from("src/main/resources") {
+        include "application.yml", "logback-spring.xml"
+        into("config")
+    }
+
+    from(rootProject.file("deploy/templates/bin")) {
+        into("bin")
+        // 等价于 chmod 755
+        filePermissions {
+            user {
+                read = true
+                write = true
+                execute = true
+            }
+            group {
+                read = true
+                execute = true
+            }
+            other {
+                read = true
+                execute = true
+            }
+        }
+    }
+
+    into("logs") {}
+}
+
+// 最干净、工业级的强制重新打包方案
+tasks.named("assembleDist") {
+    outputs.upToDateWhen { false }
+}
+
+tasks.register("distZip", Zip) {
+    dependsOn tasks.named("assembleDist")
+
+    from(layout.buildDirectory.dir("dist"))
+    archiveFileName = "guide.zip"
+    destinationDirectory = layout.buildDirectory.dir("distributions").get().asFile
+}
+
+// 最干净、工业级的强制重新打包方案
+tasks.named("distZip") {
+    outputs.upToDateWhen { false }
 }

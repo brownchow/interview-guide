@@ -10,10 +10,16 @@ spring:
   
   # PostgreSQL数据库配置
   datasource:
-    url: jdbc:postgresql://localhost:5432/interview_guide
+    url: jdbc:postgresql://172.22.18.29:5432/interview_guide
     username: postgres
-    password: 123456
+    password: postgres
     driver-class-name: org.postgresql.Driver
+
+  data:
+    redis:
+      host: 172.22.18.29
+      port: 6379
+      password: yourPassword
   
   jpa:
     hibernate:
@@ -68,21 +74,21 @@ app:
   
   # RustFS (S3兼容) 存储配置
   storage:
-    endpoint: http://localhost:9000
+    endpoint: http://172.22.18.29:9000
     access-key: Bdxbc3IoYFj7GEq4HAWi
     secret-key: 1vcANwb2FZh356Y8pGRUgunskJjfoLzqSxOMCHdi
     bucket: interview-guide
     region: us-east-1
-  
+
   # CORS配置 - React前端
   cors:
-    allowed-origins: http://localhost:5173,http://localhost:5174
+    allowed-origins: http://172.22.18.29:5173,http://172.22.18.29:5174
 
 # Redisson配置
 redisson:
   config: |
     singleServerConfig:
-      address: "redis://localhost:6379"
+      address: "redis://172.22.18.29:6379"
       database: 0
       idleConnectionTimeout: 10000
       connectTimeout: 10000
