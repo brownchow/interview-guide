@@ -10,10 +10,17 @@ spring:
 
   # PostgreSQL数据库配置
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:interview_guide}
+    url: jdbc:postgresql://${POSTGRES_HOST:172.22.18.29}:${POSTGRES_PORT:5432}/${POSTGRES_DB:interview_guide}
     username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:123456}
+    password: ${POSTGRES_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+
+
+  data:
+    redis:
+      host: 172.22.18.29
+      port: 6379
+      password: InterviewGuide@123
 
   jpa:
     hibernate:
@@ -42,7 +49,7 @@ spring:
           connectionPoolSize: 64
           subscriptionConnectionMinimumIdleSize: 1
           subscriptionConnectionPoolSize: 50
-  
+
   # Spring AI - 阿里云DashScope (OpenAI兼容模式)
   ai:
     openai:
@@ -81,7 +88,7 @@ app:
 
   # RustFS (S3兼容) 存储配置
   storage:
-    endpoint: ${APP_STORAGE_ENDPOINT:http://localhost:9000}
+    endpoint: ${APP_STORAGE_ENDPOINT:http://172.22.18.29:9000}
     access-key: ${APP_STORAGE_ACCESS_KEY:Bdxbc3IoYFj7GEq4HAWi}
     secret-key: ${APP_STORAGE_SECRET_KEY:1vcANwb2FZh356Y8pGRUgunskJjfoLzqSxOMCHdi}
     bucket: ${APP_STORAGE_BUCKET:interview-guide}
