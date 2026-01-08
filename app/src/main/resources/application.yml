@@ -43,7 +43,7 @@ spring:
     redisson:
       config: |
         singleServerConfig:
-          address: "redis://${REDIS_HOST:localhost}:${REDIS_PORT:6379}"
+          address: "redis://${REDIS_HOST:172.22.18.29}:${REDIS_PORT:6379}"
           database: 0
           password: InterviewGuide@123 # Redis密码 (如果需要)
           connectionMinimumIdleSize: 10
@@ -97,4 +97,4 @@ app:
 
   # CORS配置 - React前端
   cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:5174,http://localhost:80}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://172.22.18.29:5173,http://172.22.18.29:5174,http://172.22.18.29:80}
