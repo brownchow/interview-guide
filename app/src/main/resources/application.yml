@@ -90,8 +90,8 @@ app:
   # RustFS (S3兼容) 存储配置
   storage:
     endpoint: ${APP_STORAGE_ENDPOINT:http://172.22.18.29:9000}
-    access-key: ${APP_STORAGE_ACCESS_KEY:Bdxbc3IoYFj7GEq4HAWi}
-    secret-key: ${APP_STORAGE_SECRET_KEY:1vcANwb2FZh356Y8pGRUgunskJjfoLzqSxOMCHdi}
+    access-key: ${APP_STORAGE_ACCESS_KEY:lON4VvSHUe3TCFRJj8Xr}
+    secret-key: ${APP_STORAGE_SECRET_KEY:7WmHIUJE3OyDs52fijZKo8YuQhl4VdAPMwGn6r9C}
     bucket: ${APP_STORAGE_BUCKET:interview-guide}
     region: ${APP_STORAGE_REGION:us-east-1}
 

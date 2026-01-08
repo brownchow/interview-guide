@@ -8,7 +8,7 @@ if [ ! -f "$PID_FILE" ]; then
 fi
 
 PID=$(cat "$PID_FILE")
-kill -9 $PID
+kill  $PID
 sleep 3
 if kill -0 $PID 2>/dev/null; then
   echo "PID $PID still running; sending SIGKILL"
