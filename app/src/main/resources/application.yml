@@ -19,7 +19,7 @@ spring:
     redis:
       host: 172.22.18.29
       port: 6379
-      password: yourPassword
+      password: InterviewGuide@123
 
   jpa:
     hibernate:
@@ -39,10 +39,11 @@ spring:
   # Redisson配置 (使用 spring.redis.redisson，参考官方文档)
   redis:
     redisson:
-      config: |
+      config:
         singleServerConfig:
-          address: "redis://localhost:6379"
+          address: "redis://172.22.18.29:6379"
           database: 0
+          password: InterviewGuide@123 # Redis密码 (如果需要)
           connectionMinimumIdleSize: 10
           connectionPoolSize: 64
           subscriptionConnectionMinimumIdleSize: 1
@@ -87,8 +88,8 @@ app:
   # RustFS (S3兼容) 存储配置
   storage:
     endpoint: http://172.22.18.29:9000
-    access-key: Bdxbc3IoYFj7GEq4HAWi
-    secret-key: 1vcANwb2FZh356Y8pGRUgunskJjfoLzqSxOMCHdi
+    access-key: lON4VvSHUe3TCFRJj8Xr
+    secret-key: 7WmHIUJE3OyDs52fijZKo8YuQhl4VdAPMwGn6r9C
     bucket: interview-guide
     region: us-east-1
   
