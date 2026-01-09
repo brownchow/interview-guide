@@ -8,6 +8,8 @@ PID_FILE="$BASE_DIR/bin/guide.pid"
 
 mkdir -p "$LOG_DIR"
 
+# 设置 AI key 环境变量
+export AI_BAILIAN_API_KEY="sk-xxxxxx"
 JAVA_OPTS="-Xms512m -Xmx1g"
 SPRING_OPTS="-Dspring.config.location=file:$CONF_DIR/application.yml -Dlogging.config=file:$CONF_DIR/logback-spring.xml"
 
